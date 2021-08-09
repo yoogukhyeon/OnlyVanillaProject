@@ -1,1 +1,1 @@
-only javascript todo list 
+only vanilla project todo list 
