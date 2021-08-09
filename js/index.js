@@ -47,15 +47,6 @@ function AddBtnActive(Date , Btn){
     }
 }
 
-//delete btn 함수
-function DeleteBtnActive(Arr , Btn){
-    if(Arr.length > 0){
-        Btn.classList.add('active')
-    }else{
-        Btn.classList.remove('active')
-    }
-}
-
 //input keyUp
 inputBox.addEventListener('keyup' , function(){
     const UserDate = inputBox.value;
@@ -79,7 +70,7 @@ function IFlocalStorage(getLocalStorage , arrList){
 
 //delete btn 
 deleteAllBtn.addEventListener('click' , function(){
-    arrList;
+    arrList = [];
     LOCALSTORAGE.setItem(LocalKey,JSON.stringify(arrList))
     showList();
 })
@@ -90,7 +81,11 @@ addBtn.addEventListener('click' , function(){
     const UserDate = inputBox.value;
     let getLocalStorage = LOCALSTORAGE.getItem(LocalKey);
 
-    IFlocalStorage();
+    if(getLocalStorage == null){
+        arrList
+    }else{
+        arrList = JSON.parse(getLocalStorage)
+    }
     
     arrList.push(UserDate);
     LOCALSTORAGE.setItem(LocalKey , JSON.stringify(arrList))
@@ -103,13 +98,20 @@ addBtn.addEventListener('click' , function(){
 function showList(){
     let getLocalStorage = LOCALSTORAGE.getItem(LocalKey);
 
-    IFlocalStorage();
+    if(getLocalStorage == null){
+        arrList
+    }else{
+        arrList = JSON.parse(getLocalStorage)
+    }
 
     const pendding = document.querySelector('.panding')
     pendding.textContent = arrList.length;
 
-
-    DeleteBtnActive(arrList , deleteAllBtn)
+    if(arrList.length > 0){
+        deleteAllBtn.classList.add('active')
+    }else{
+        deleteAllBtn.classList.remove('active')
+    }
 
     let NewLitag = '';
     arrList.forEach((element , index) => {
